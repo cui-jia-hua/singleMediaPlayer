@@ -7,7 +7,66 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <MenuFlyout x:Key="ImageMenuFlyout" x:Name="Flyout">
+            <MenuFlyoutItem Text="打开本地文件" Click="MenuFlyoutItem_OnClickAsync"/>
+            <MenuFlyoutItem Text="下载媒体" Click="DownloadMedia_ClickAsync"/>
+        </MenuFlyout>
 
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" FontSize="32" Margin="15" 
+                FontFamily="Segoe MDL2 Assets" Content="&#57643;"
+                Click="ButtonBase_OnClickAsync" Name="Splitbutton"></Button>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock FontSize="32" Name="Block" Width="350"></TextBlock>
+            <TextBox Width="550" Height="40" Name="Uri"></TextBox>
+            <Button FontSize="24" Margin="25,0,25,0" Click="OnlineListen_Click">打开网址</Button>
+        </StackPanel>
+        
+        <SplitView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                   Name="MySplitView" CompactPaneLength="10" OpenPaneLength="250" DisplayMode="CompactInline">
+            <SplitView.Pane>
+                
+                <Grid>
+                    <ParallaxView Source="{x:Bind ListView}" VerticalShift="100">
+                        <Image x:Name="BackgroundImage" Source="Assets/backgroundimage.jpg"
+                               Stretch="Fill"/>
+                    </ParallaxView>
+                    <ListView Name="ListView" 
+                              IsItemClickEnabled="True"
+                              IsSwipeEnabled="False"
+                              CanDragItems="False"
+                              SelectionMode="Single"
+                              ItemClick="ListView_OnItemClickAsync">
+                        
+
+                    </ListView>
+                </Grid>
+
+            </SplitView.Pane>
+            <SplitView.Content>
+                <MediaPlayerElement Name="MediaPlayerElement" HorizontalAlignment="Stretch"   
+                                    AreTransportControlsEnabled="true"  
+                                    FlyoutBase.AttachedFlyout="{StaticResource ImageMenuFlyout}"
+                                    RightTapped="Image_RightTapped" >
+                </MediaPlayerElement>
+            </SplitView.Content>
+        </SplitView>
+
+        
+        
     </Grid>
 </Page>
